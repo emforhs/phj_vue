@@ -8,25 +8,34 @@
                  :use-css-transforms="true"
     >
         <grid-item v-for="item in layout"
-                    :key="item.i"
-                   :static="item.static"
-                   :x="item.x"
-                   :y="item.y"
-                   :w="item.w"
-                   :h="item.h"
-                   :i="item.i"
+            :key="item.i"
+            :static="item.static"
+            :x="item.x"
+            :y="item.y"
+            :w="item.w"
+            :h="item.h"
+            :i="item.i"
         >
-            <span class="text">{{itemTitle(item)}}</span>
+            <div class="item-title">
+               <q-btn flat round dense icon="close" />
+            </div>
+            <div class="item-content">
+
+            </div>
         </grid-item>
-    </grid-layout>
+        <chart-modal />
+    </grid-layout>    
 </template>
 
 <script>
-import { GridLayout, GridItem } from "vue-grid-layout"
+import { GridLayout, GridItem } from "vue-grid-layout";
+import ChartModal from "components/modal/ChartModal.vue";
+
 export default {
     components: {
         GridLayout,
-        GridItem
+        GridItem,
+        ChartModal
     },
     data() {
         return {
@@ -70,12 +79,21 @@ export default {
 </script>
 
 <style scoped>
-.vue-grid-layout {
- 
-} 
+.item-title {
+    border-radius: 8px 8px 0 0;
+    background: seashell;
+    height: 40px;
+}
+.item-content{
+    border-radius: 0 0 8px 8px;
+    background: steelblue;
+    flex: 1;
+}
 .vue-grid-item:not(.vue-grid-placeholder) {
-    background: #ccc;
     border: 1px solid black;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
 }
 .vue-grid-item .resizing {
     opacity: 0.9;
@@ -83,24 +101,9 @@ export default {
 .vue-grid-item .static {
     background: #cce;
 }
-.vue-grid-item .text {
-    font-size: 24px;
-    text-align: center;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    margin: auto;
-    height: 100%;
-    width: 100%;
-}
 .vue-grid-item .no-drag {
     height: 100%;
     width: 100%;
-}
-.vue-grid-item .minMax {
-    font-size: 12px;
 }
 .vue-grid-item .add {
     cursor: pointer;
