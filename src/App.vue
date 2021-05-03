@@ -72,7 +72,7 @@ const linksData = [
     title: '포폴1',
     caption: '화면',
     icon: 'chat',
-    link: 'https://chat.quasar.dev'
+    link: '/gridster'
   },
   {
     title: 'Quasar Awesome',
