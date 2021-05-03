@@ -20,7 +20,7 @@ module.exports = function (/* ctx */) {
     // --> boot files are part of "main.js"
     // https://v1.quasar.dev/quasar-cli/boot-files
     boot: [
-      
+      'set',
       'i18n',
       'axios',
     ],
@@ -83,7 +83,18 @@ module.exports = function (/* ctx */) {
     framework: {
       iconSet: 'material-icons', // Quasar icon set
       lang: 'en-us', // Quasar language pack
-      config: {},
+      config: {
+        cordova: {
+          // Quasar handles app exit on mobile phone back button.
+          // Requires Quasar v1.9.3+ for true/false/'*'/['/login', '/home', '/my-page'], v1.12.6+ for '*' wildcard and array values 
+          backButtonExit: false,
+
+          // On the other hand, the following completely
+          // disables Quasar's back button management.
+          // Requires Quasar v1.14.1+
+          backButton: false
+        }
+      },
 
       // Possible values for "importStrategy":
       // * 'auto' - (DEFAULT) Auto-import needed Quasar components & directives

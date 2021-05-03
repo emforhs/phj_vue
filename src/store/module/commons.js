@@ -1,6 +1,5 @@
 import VueRouter from 'vue-router'
 import axios from 'axios'
-const { isNavigationFailure, NavigationFailureType } = VueRouter
 
 const state = () => ({
 
