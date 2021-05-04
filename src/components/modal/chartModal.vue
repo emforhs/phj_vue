@@ -1,11 +1,11 @@
 <template>
   <div class="q-pa-md q-gutter-sm right">
-    <q-btn label="추가" color="primary" @click="layout = true"/>
-    <q-btn label="저장" color="primary" @click="layout = true"/>
+    <q-btn label="추가" color="primary" @click="open()"/>
+    <q-btn label="저장" color="primary" />
 
     <q-dialog v-model="layout" persistent>
-      <q-layout container class="bg-white" style="max-height: 70vh">
-        <q-header class="bg-primary" elevated>
+      <q-layout view="hHh Lpr fff" container style="min-width: 700px; height: 500px" class="bg-white rounded-borders">
+        <q-header elevated class="bg-primary">
           <q-toolbar>
             <q-btn flat @click="drawer = !drawer" round dense icon="menu" />
             <q-toolbar-title align="center">차트 설정</q-toolbar-title>
@@ -13,17 +13,11 @@
           </q-toolbar>
         </q-header>
 
-        <q-footer class="bg-primary">
-          <q-toolbar>
-            <q-btn outline color="white" label="설정" />
-            <q-btn outline color="white" label="취소" />
-          </q-toolbar>
-        </q-footer>
-
         <q-drawer
           v-model="drawer"
           show-if-above
           :width="200"
+          :breakpoint="500"
           bordered
           content-class="bg-grey-3"
         >
@@ -33,17 +27,20 @@
             target="_blank"
             v-for="(el,idx) in menu" :key="idx"
           >
-            <q-item-section>
+            <q-item-section @click="select(el.options)">
               <q-item-label>{{el.name}}</q-item-label>
-              <!-- <q-item-label caption>
-                {{ n }}
-              </q-item-label> -->
             </q-item-section>
           </q-item>
         </q-drawer>
 
-        <q-page-container class="content">
-          <div :id="'test_item'"/>
+        <q-footer class="bg-primary">
+          <q-toolbar>
+            <q-btn outline color="white" label="설정" />
+            <q-btn outline color="white" label="취소" />
+          </q-toolbar>
+        </q-footer>
+
+        <q-page-container>
           <q-page padding id="select_item">
           </q-page>
         </q-page-container>
@@ -59,7 +56,7 @@ export default {
       layout: false,
 
       moreContent: true,
-      drawer: false,
+      drawer: true,
       menu:[
         {
           name:"Bar Charts",
@@ -160,20 +157,22 @@ export default {
   computed: {
   },
   mounted(){
-    console.log(document.querySelector('#test_item'));
-    setTimeout(() => {
-       this.$createChart(document.querySelector("#select_item"),this.menu[0].options);
-    }, 2000);
   },
   methods: {
+    open(){
+      this.layout = true;
+      this.$nextTick(()=>{
+        this.$createChart(document.querySelector("#select_item"),this.menu[1].options);
+      });
+    },
     add () {
       
     },
     save () {
 
     },
-    select(el){
-      this.$updateChart(document.getElementById("#select_item"),el.options)
+    select(options){
+      this.$updateChart(document.getElementById("#select_item"),options)
     }
   }
 }
