@@ -31,20 +31,20 @@
             clickable
             tag="a"
             target="_blank"
-            v-for="n in 50" :key="n"
+            v-for="(el,idx) in menu" :key="idx"
           >
             <q-item-section>
-              <q-item-label>Drawer {{ n }} / 50</q-item-label>
-              <q-item-label caption>
+              <q-item-label>{{el.name}}</q-item-label>
+              <!-- <q-item-label caption>
                 {{ n }}
-              </q-item-label>
+              </q-item-label> -->
             </q-item-section>
           </q-item>
         </q-drawer>
 
         <q-page-container class="content">
-          <q-page padding>
-
+          <div :id="'test_item'"/>
+          <q-page padding id="select_item">
           </q-page>
         </q-page-container>
       </q-layout>
@@ -60,11 +60,110 @@ export default {
 
       moreContent: true,
       drawer: false,
-
-      lorem: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Natus, ratione eum minus fuga, quasi dicta facilis corporis magnam, suscipit at quo nostrum!'
+      menu:[
+        {
+          name:"Bar Charts",
+          options : {
+            series: [{
+              data: [400, 430, 448, 470, 540, 580, 690, 1100, 1200, 1380]
+            }],
+            chart: {
+              type: 'bar',
+              height: 350
+            },
+            plotOptions: {
+              bar: {
+                borderRadius: 4,
+                horizontal: true,
+              }
+            },
+            dataLabels: {
+              enabled: false
+            },
+            xaxis: {
+              categories: ['South Korea', 'Canada', 'United Kingdom', 'Netherlands', 'Italy', 'France', 'Japan',
+                'United States', 'China', 'Germany'
+              ],
+            }
+          }
+        },
+        {
+          name:"Pie Charts",
+          options : {
+            series: [44, 55, 13, 43, 22],
+            chart: {
+              width: 380,
+              type: 'pie',
+            },
+            labels: ['Team A', 'Team B', 'Team C', 'Team D', 'Team E'],
+            responsive: [{
+              breakpoint: 480,
+              options: {
+                chart: {
+                  width: 200
+                },
+                legend: {
+                  position: 'bottom'
+                }
+              }
+            }]
+          }
+        },
+        {
+          name:"Radar Charts",
+          options : {
+            series: [{
+              name: 'Series 1',
+              data: [80, 50, 30, 40, 100, 20],
+            }],
+            chart: {
+              height: 350,
+              type: 'radar',
+            },
+            title: {
+              text: 'Basic Radar Chart'
+            },
+            xaxis: {
+              categories: ['January', 'February', 'March', 'April', 'May', 'June']
+            }
+          }
+        },
+        {
+          name:"Polar Area Charts",
+          options : {
+            series: [14, 23, 21, 17, 15, 10, 12, 17, 21],
+            chart: {
+              type: 'polarArea',
+            },
+            stroke: {
+              colors: ['#fff']
+            },
+            fill: {
+              opacity: 0.8
+            },
+            responsive: [{
+              breakpoint: 480,
+              options: {
+                chart: {
+                  width: 200
+                },
+                legend: {
+                  position: 'bottom'
+                }
+              }
+            }]
+          }
+        },
+      ],
     }
   },
   computed: {
+  },
+  mounted(){
+    console.log(document.querySelector('#test_item'));
+    setTimeout(() => {
+       this.$createChart(document.querySelector("#select_item"),this.menu[0].options);
+    }, 2000);
   },
   methods: {
     add () {
@@ -72,6 +171,9 @@ export default {
     },
     save () {
 
+    },
+    select(el){
+      this.$updateChart(document.getElementById("#select_item"),el.options)
     }
   }
 }

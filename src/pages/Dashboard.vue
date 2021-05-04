@@ -16,16 +16,7 @@
             :h="item.h"
             :i="item.i"
         >
-            <div class="item-title">
-                <q-toolbar >
-                    <q-toolbar-title>
-                        Toolbar
-                    </q-toolbar-title>
-                    <q-btn flat round dense icon="close" />
-                </q-toolbar>
-            </div>
-            <div class="item-content" :id="'chart_'+item.i">
-            </div>
+         <common-item @close="del"/>
         </grid-item>
         <chart-modal />
     </grid-layout>    
@@ -34,11 +25,13 @@
 <script>
 import { GridLayout, GridItem } from "vue-grid-layout";
 import ChartModal from "components/modal/ChartModal.vue";
+import CommonItem from "components/CommonItem.vue";
 
 export default {
     components: {
         GridLayout,
         GridItem,
+        CommonItem,
         ChartModal
     },
     data() {
@@ -57,98 +50,6 @@ export default {
         }
     },
     mounted (){
-        var options = {
-            chart: {
-                height: 350,
-                type: "line",
-                stacked: false
-            },
-            dataLabels: {
-                enabled: false
-            },
-            colors: ["#FF1654", "#247BA0"],
-            series: [
-                {
-                name: "Series A",
-                data: [1.4, 2, 2.5, 1.5, 2.5, 2.8, 3.8, 4.6]
-                },
-                {
-                name: "Series B",
-                data: [20, 29, 37, 36, 44, 45, 50, 58]
-                }
-            ],
-            stroke: {
-                width: [4, 4]
-            },
-            plotOptions: {
-                bar: {
-                columnWidth: "20%"
-                }
-            },
-            xaxis: {
-                categories: [2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016]
-            },
-            yaxis: [
-                {
-                axisTicks: {
-                    show: true
-                },
-                axisBorder: {
-                    show: true,
-                    color: "#FF1654"
-                },
-                labels: {
-                    style: {
-                    colors: "#FF1654"
-                    }
-                },
-                title: {
-                    text: "Series A",
-                    style: {
-                    color: "#FF1654"
-                    }
-                }
-                },
-                {
-                opposite: true,
-                axisTicks: {
-                    show: true
-                },
-                axisBorder: {
-                    show: true,
-                    color: "#247BA0"
-                },
-                labels: {
-                    style: {
-                    colors: "#247BA0"
-                    }
-                },
-                title: {
-                    text: "Series B",
-                    style: {
-                    color: "#247BA0"
-                    }
-                }
-                }
-            ],
-            tooltip: {
-                shared: false,
-                intersect: true,
-                x: {
-                show: false
-                }
-            },
-            legend: {
-                horizontalAlign: "left",
-                offsetX: 40
-            }
-        };
-        setTimeout(() => {
-            this.layout.forEach(el=>{
-                this.$createChart(document.querySelector("#chart_"+el.i), options);
-            })
-        }, 2000);
-
     },
     methods: {
         itemTitle(item) {
@@ -159,28 +60,25 @@ export default {
             return result;
         },
         del(idx) {
+            this.$nextTick(function() {
+                this.reNumbering();
+            })
             this.layout.splice(idx,1);
             console.log(this.layout);
-        }
+        },
+        reNumbering(){
+            let re = true
+            for (let index = 0; index < this.layout.length; index++) {
+                this.layout[index].i = index; 
+            }
+            return re
+        },
+        
     }
 }
 </script>
 
 <style lang="scss" scoped>
-.item-title {
-    border-radius: 8px 8px 0 0;
-    height: 40px;
-    .q-toolbar {
-        position: relative;
-        padding: 0 6px !important;
-        min-height: 40px  !important;
-        width: 100%;
-    }
-}
-.item-content{
-    border-radius: 0 0 8px 8px;
-    flex: 1;
-}
 .vue-grid-item:not(.vue-grid-placeholder) {
     border: 1px solid black;
     border-radius: 8px;
