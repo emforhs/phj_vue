@@ -37,18 +37,13 @@ export default {
     },
     data() {
         return {
-            layout: [
-
-                {"x":8,"y":0,"w":2,"h":10,"i":"4", static: false},
-                {"x":10,"y":0,"w":2,"h":10,"i":"5", static: false},
-            ],
             draggable: true,
             resizable: true,
             index: 0
         }
     },
     computed :{
-
+        ...mapGetters('layout',['layout']),
     },
     mounted (){
     },
