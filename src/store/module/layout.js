@@ -17,19 +17,30 @@ const getters = {
 }
 
 const actions = {
-  addLayout({commit}, payload) {
-
+  addLayout({commit, dispatch, state }, payload) {
+    commit('layoutAdd',payload);
   },
-  updateLayout({commit}, payload) {
-
+  updateLayout({commit, dispatch, state }, payload) {
+    commit('layoutUpdate',payload);
   },
-  delLayout({commit}, payload) {
-    
+  delLayout({commit, dispatch, state }, payload) {
+    commit('layoutDel',payload);
   }
 }
 
 const mutations = {
-
+  layoutAdd (state, payload) {
+    state.layout.push(payload);
+  },
+  layoutUpdate(state, payload){
+    state.layout[payload.idx] = payload.obj;
+  },
+  layoutDel(state, payload){
+    state.layout.splice(payload.idx,1);
+    state.layout.forEach(el,idx => {
+      el.i = idx;
+    });
+  },
 }
 
 export default {
