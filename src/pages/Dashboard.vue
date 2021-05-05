@@ -26,6 +26,7 @@
 import { GridLayout, GridItem } from "vue-grid-layout";
 import ChartModal from "components/modal/ChartModal.vue";
 import CommonItem from "components/CommonItem.vue";
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
     components: {
@@ -37,10 +38,7 @@ export default {
     data() {
         return {
             layout: [
-                {"x":0,"y":0,"w":2,"h":10,"i":"0", static: false},
-                {"x":2,"y":0,"w":2,"h":10,"i":"1", static: false},
-                {"x":4,"y":0,"w":2,"h":10,"i":"2", static: false},
-                {"x":6,"y":0,"w":2,"h":10,"i":"3", static: false},
+
                 {"x":8,"y":0,"w":2,"h":10,"i":"4", static: false},
                 {"x":10,"y":0,"w":2,"h":10,"i":"5", static: false},
             ],
@@ -48,6 +46,9 @@ export default {
             resizable: true,
             index: 0
         }
+    },
+    computed :{
+
     },
     mounted (){
     },
