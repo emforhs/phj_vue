@@ -107,22 +107,55 @@ export default {
           }
         },
         {
-          name:"Radar Charts",
+          name:"Box & Whisker Charts",
           options : {
-            series: [{
-              name: 'Series 1',
-              data: [80, 50, 30, 40, 100, 20],
-            }],
-            chart: {
-              height: 350,
-              type: 'radar',
-            },
-            title: {
-              text: 'Basic Radar Chart'
-            },
-            xaxis: {
-              categories: ['January', 'February', 'March', 'April', 'May', 'June']
+            series: [
+            {
+              type: 'boxPlot',
+              data: [
+                {
+                  x: 'Jan 2015',
+                  y: [54, 66, 69, 75, 88]
+                },
+                {
+                  x: 'Jan 2016',
+                  y: [43, 65, 69, 76, 81]
+                },
+                {
+                  x: 'Jan 2017',
+                  y: [31, 39, 45, 51, 59]
+                },
+                {
+                  x: 'Jan 2018',
+                  y: [39, 46, 55, 65, 71]
+                },
+                {
+                  x: 'Jan 2019',
+                  y: [29, 31, 35, 39, 44]
+                },
+                {
+                  x: 'Jan 2020',
+                  y: [41, 49, 58, 61, 67]
+                },
+                {
+                  x: 'Jan 2021',
+                  y: [54, 59, 66, 71, 88]
+                }
+              ]
             }
+          ],
+          chart: {
+            type: 'boxPlot',
+            height: 350
+          },
+          plotOptions: {
+            boxPlot: {
+              colors: {
+                upper: '#5C4742',
+                lower: '#A5978B'
+              }
+            }
+          }
           }
         },
         {
@@ -162,7 +195,7 @@ export default {
     open(){
       this.layout = true;
       this.$nextTick(()=>{
-        this.$createChart(document.querySelector("#select_item"),this.menu[1].options);
+        this.$createChart("select_item",this.menu[1].options);
       });
     },
     add () {
@@ -171,8 +204,8 @@ export default {
     save () {
 
     },
-    select(options){
-      this.$updateChart(document.getElementById("#select_item"),options)
+    select(option){
+      this.$updateChart("select_item",option)
     }
   }
 }
